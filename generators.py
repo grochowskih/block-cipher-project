@@ -32,8 +32,6 @@ def generate_key(main_key, round):
     left = main_key[0:32]
     right = main_key[32:64]
 
-    print("Lewy przed:" , left)
-    print("Prawy przed: ", right)
     if round % 2 == 0:
         left = shift_repeat_left(left, round)
         right = shift_repeat_right(right, round)
