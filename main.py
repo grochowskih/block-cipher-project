@@ -50,7 +50,7 @@ S3=[203, 7, 247, 111, 98, 149, 13, 176, 233, 198, 101, 50, 49, 17, 214, 35, 222,
 86, 145, 56, 173, 82, 8, 67, 124, 51, 156, 210, 224, 143, 200, 184, 174, 135,
 126]
 
-def shift(text,i):
+def shift(text,i): #przesuniecie o i bitów w prawo
     text=int(text, 2)
     text=text >> i
     return bin(text)[2:]
@@ -70,25 +70,27 @@ def encrypt(plaintext, key):
 
     """
     if len(plaintext) != 64:
-        raise Exception("Niepoprawny rozmiar zmiennej plaintext!")
+        raise Exception("Niepoprawny rozmiar zmiennej plaintext!") 
     if len(key) != 64:
         raise Exception("Niepoprawny rozmiar zmiennej key!")    
+    #Sprawdzenie dlugosci danych wejsciowych
 
     L=plaintext[0:32]
     R=plaintext[32:64]
+    #Podzial plaintextu na 2 bloki 32-bitowe
 
     for i in range(1,17):
-        R_temp=int(R,2)^int(key,2)
-        R_temp=shift(bin(R_temp)[2:],i).zfill(32)
-        B1=R_temp[0:8]
+        R_temp=int(R,2)^int(key,2) #XOR z kluczem
+        R_temp=shift(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
+        B1=R_temp[0:8] #Podzial na 4 bloki 8-bitowe
         B2=R_temp[8:16]
         B3=R_temp[16:24]
         B4=R_temp[24:32]
-        k1=key[0:8]
+        k1=key[0:8] #Podzial klucza na 4 bloki 8-bitowe
         k2=key[8:16]
         k3=key[16:24]
         k4=key[24:32]
-        if int(k1,2)%3==0:
+        if int(k1,2)%3==0: #Reszta z dzielenia przez 3
             B1=S1[int(B1,2)]
         if int(k1,2)%3==1:
             B1=S2[int(B1,2)]
@@ -112,10 +114,13 @@ def encrypt(plaintext, key):
             B4=S2[int(B4,2)]
         if int(k4,2)%3==2:
             B4=S3[int(B4,2)]
-        R_temp=bin(B1)[2:].zfill(8)+bin(B2)[2:].zfill(8)+bin(B3)[2:].zfill(8)+bin(B4)[2:].zfill(8)
+        R_temp=bin(B1)[2:].zfill(8)+bin(B2)[2:].zfill(8)+bin(B3)[2:].zfill(8)+bin(B4)[2:].zfill(8) #Polaczenie 4 blokow
         L_temp=int(L,2)
-        L=R
-        R=bin(int(R_temp,2)^L_temp)[2:]
+        L=R #Prawy blok staje sie lewym
+        R=bin(int(R_temp,2)^L_temp)[2:] #XOR lewego bloku z wyjsciem z funkcji f
 
-    ciphertext=L+R      
+    ciphertext=L+R #Polaczenie lewego i prawego bloku      
     return ciphertext  
+
+
+encrypt("0101110101010100101101011110101010001000101011010110101010001100","0101101010101001011010111101010100001000100011010110101010001100")
