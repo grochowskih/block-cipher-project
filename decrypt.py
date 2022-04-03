@@ -23,8 +23,9 @@ def decrypt(ciphertext, key):
         new_left = s_box(round_key, new_left)
         new_left = int(new_left, 2) ^ int(right, 2)
 
-        left = new_left.copy()
-        right = left.copy()
+        old_left = left
+        left = new_left()
+        right = old_left
 
     return left + right
 
