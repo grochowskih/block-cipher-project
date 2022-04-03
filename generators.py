@@ -19,7 +19,7 @@ def generate_key(main_key, round):
         left = int(left, 2) >> round
         right = int(right, 2) << round
 
-    return "{0:032b}".format(left) + "{0:032b}".format(right)
+    return "{0:032b}".format(left ^ right)
 
 
 def s_box(round_key, arg):
