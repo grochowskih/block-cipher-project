@@ -21,7 +21,7 @@ if __name__ == "__main__":
                 enc = encrypt(mes, key)
                 print("Wynik szyfrowania to: ")
                 print(enc)
-        elif choice == "2":
+        elif choice == "3":
             mes = input("Podaj wiadomość jako ciąg 64 bitów, którą chcesz deszyfrować:" )
             key = input("Podaj klucz jako ciąg 64 bitów, którego chcesz użyć: ")
             if re.match("^[01]+$", mes) is None or re.match("^[01]+$", key) is None:
