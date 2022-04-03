@@ -20,7 +20,7 @@ def decrypt(ciphertext, key):
         round_key = generate_key(key, i)
         new_left = "{0.032b}".format(int(left, 2) ^ int(round_key, 2))
         new_left = new_left >> 17
-        new_left = s_box(new_left, i)
+        new_left = s_box(round_key, new_left)
         new_left = int(new_left, 2) ^ int(right, 2)
 
         left = new_left.copy()
