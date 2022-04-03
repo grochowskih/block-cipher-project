@@ -33,7 +33,7 @@ def encrypt(plaintext, key):
         R_temp=s_box(round_key, R_temp)
         L_temp=int(L,2)
         L=R #Prawy blok staje sie lewym
-        R=bin(int(R_temp,2)^L_temp)[2:] #XOR lewego bloku z wyjsciem z funkcji f
+        R=bin(int(R_temp,2)^L_temp)[2:].zfill(32) #XOR lewego bloku z wyjsciem z funkcji f
 
     ciphertext=L+R #Polaczenie lewego i prawego bloku      
     return ciphertext
