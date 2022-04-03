@@ -29,7 +29,7 @@ def encrypt(plaintext, key):
     for i in range(1,17):
         round_key=generate_key(key, i)
         R_temp=int(R,2)^int(round_key,2) #XOR z kluczem
-        R_temp=shift_repeat_right(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
+        R_temp=shift_repeat_right(bin(R_temp)[2:].zfill(32),i).zfill(32) #Przesuniecie o i bitów w prawo
         R_temp=s_box(round_key, R_temp)
         L_temp=int(L,2)
         L=R #Prawy blok staje sie lewym
