@@ -3,7 +3,7 @@ from encrypt import encrypt
 import re
 import time
 
-from examples import examples
+from examples import examples, random_examples
 
 if __name__ == "__main__":
     run = "1"
@@ -12,6 +12,7 @@ if __name__ == "__main__":
         print("1) Przykładowe dane, które pokazują, że algorytm działa")
         print("2) Zaszyfruj wiadomość")
         print("3) Deszyfruj wiadomość")
+        print("4) Sprawdź szybkość szyfrowania i deszyfrowania wiadomości")
         choice = input("Wybierz opcję: ")
         if choice == "1":
             start = time.time()
@@ -52,6 +53,21 @@ if __name__ == "__main__":
                     print(dec)
             except Exception as ex:
                 print(ex)
+        elif choice == "4":
+            start = time.time()
+            try:
+                flag=True
+                for case in random_examples:
+                    enc = encrypt(case[0], case[1])
+                    dec = decrypt(enc, case[1])
+                    if dec != case[0]:
+                        flag = False
+            except Exception as ex:
+                print(ex)
+            end = time.time()
+            print("Czy wszystkie wiadomości zostały poprawnie zaszyfrowane i zdeszyfrowane? ", flag)
+            print("Czas wykonania ", len(random_examples), " operacji szyfrowania i deszyfrowania wyniósł: ", end - start)
+        
         else:
             print("Błędny wybór!")
         run = input("Czy chcesz kontynuować, jeśli tak, to wybierz 1: ")
