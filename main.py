@@ -21,13 +21,13 @@ if __name__ == "__main__":
                     print("Uzyty klucz: ", case[1])
                     enc = encrypt(case[0], case[1])
                     print("Wynik szyfrowania: ", enc)
-                    dec = decrypt(dec, case[1])
+                    dec = decrypt(enc, case[1])
                     print("Wynik deszyfrowania: ", dec)
                     print("Czy wiadomość jest równa złożeniu deszyfrowania i szyfrowania? ", dec == case[0])
             except Exception as ex:
                 print(ex)
             end = time.time()
-            print("Czas wykonania operacji sprawdzenia to: ", end - start)
+            print("Czas wykonania ", len(examples), " operacji szyfrowania i deszyfrowania wyniósł: ", end - start)
         elif choice == "2":
             mes = input("Podaj wiadomość jako ciąg 64 bitów, którą chcesz zaszyfrować: ")
             key = input("Podaj klucz jako ciąg 64 bitów, którego chcesz użyć: ")
