@@ -1,9 +1,6 @@
-from generators import generate_key, s_box
+from generators import generate_key, s_box, shift_repeat_right
 
-def shift(text,i): #przesuniecie o i bitów w prawo
-    text=int(text, 2)
-    text=text >> i
-    return bin(text)[2:]
+
 
 def encrypt(plaintext, key):
     """
@@ -32,7 +29,7 @@ def encrypt(plaintext, key):
     for i in range(1,17):
         round_key=generate_key(key, i)
         R_temp=int(R,2)^int(round_key,2) #XOR z kluczem
-        R_temp=shift(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
+        R_temp=shift_repeat_right(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
         R_temp=s_box(round_key, R_temp)
         L_temp=int(L,2)
         L=R #Prawy blok staje sie lewym
