@@ -26,7 +26,7 @@ def encrypt(plaintext, key):
     R=plaintext[32:64]
     #Podzial plaintextu na 2 bloki 32-bitowe
 
-    for i in range(1,33):
+    for i in range(0,32):
         round_key=generate_key(key, i)
         R_temp=int(R,2)^int(round_key,2) #XOR z kluczem
         R_temp=shift_repeat_right(bin(R_temp)[2:].zfill(32),i).zfill(32) #Przesuniecie o i bitów w prawo

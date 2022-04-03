@@ -16,10 +16,10 @@ def decrypt(ciphertext, key):
     left = ciphertext[0:32]
     right = ciphertext[32:64]
 
-    for i in range(1,33):
-        round_key = generate_key(key, 33 - i)
+    for i in range(0,32):
+        round_key = generate_key(key, 31 - i)
         new_left = "{0:032b}".format(int(left, 2) ^ int(round_key, 2))
-        new_left = shift_repeat_right(new_left, 33 - i)
+        new_left = shift_repeat_right(new_left, 31 - i)
         new_left = s_box(round_key, new_left)
         new_left = int(new_left, 2) ^ int(right, 2)
 
