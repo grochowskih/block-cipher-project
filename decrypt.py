@@ -1,4 +1,4 @@
-from generators import generate_key, s_box
+from generators import generate_key, s_box, shift_repeat_right
 
 
 def decrypt(ciphertext, key):
@@ -19,7 +19,7 @@ def decrypt(ciphertext, key):
     for i in range(1,17):
         round_key = generate_key(key, 17 - i)
         new_left = "{0:032b}".format(int(left, 2) ^ int(round_key, 2))
-        new_left = "{0:032b}".format(int(new_left, 2) >> (17 - i))
+        new_left = shift_repeat_right(new_left, 17 - i)
         new_left = s_box(round_key, new_left)
         new_left = int(new_left, 2) ^ int(right, 2)
 

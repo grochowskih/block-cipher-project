@@ -1,5 +1,25 @@
 import sboxes
 
+def shift_repeat_left(arg, it):
+    """
+    Funkcja, która dla ciągu binarnego zapętla go o it w lewo, czyli bit w napisie o indeksie i-tym staje sie i-it-tym (modulo długośc)
+    :param arg: Ciąg binarny
+    :param it: Zapętlenie (liczba całkowitego)
+    :return: Zapętlony ciąg binarny arg
+    """
+    length = len(arg)
+    return "".join([arg[(i - it) % length] for i in range(len(arg))])
+
+
+def shift_repeat_right(arg, it):
+    """
+    Funkcja, która dla ciągu binarnego zapętla go o it w prawo, czyli bit w napisie o indeksie i-tym staje sie i+it-tym (modulo długośc)
+    :param arg: Ciąg binarny
+    :param it: Zapętlenie (liczba całkowitego)
+    :return: Zapętlony ciąg binarny arg
+    """
+    length = len(arg)
+    return "".join([arg[(i + it) % length] for i in range(len(arg))])
 
 def generate_key(main_key, round):
     """
@@ -12,14 +32,16 @@ def generate_key(main_key, round):
     left = main_key[0:32]
     right = main_key[32:64]
 
+    print("Lewy przed:" , left)
+    print("Prawy przed: ", right)
     if round % 2 == 0:
-        left = int(left, 2) << round
-        right = int(right, 2) >> round
+        left = shift_repeat_left(left, round)
+        right = shift_repeat_right(right, round)
     else:
-        left = int(left, 2) >> round
-        right = int(right, 2) << round
+        left = shift_repeat_right(left, round)
+        right = shift_repeat_left(right, round)
 
-    return "{0:032b}".format(left ^ right)
+    return "{0:032b}".format(int(left, 2) ^ int(right, 2))
 
 
 def s_box(round_key, arg):
