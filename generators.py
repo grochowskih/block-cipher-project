@@ -5,8 +5,20 @@ def generate_key(main_key, round):
     Funkcja generująca klucz rundowy.
     :param main_key: Klucz główny (zapisany binarnie jako string długości 64 bitów)
     :param round: Numer rundy (od 1 do 16)
-    :return: Klucz rundowy (zapisany binarnie jako string długości 32 bitów)
+    :return: Klucz rundowy (zapisany binarnie jako string długości 64 bitów)
     """
+
+    left = main_key[0:32]
+    right = main_key[32:64]
+
+    if round % 2 == 0:
+        left = left << round
+        right = right >> round
+    else:
+        left = left >> round
+        right = right << round
+
+    return left + right
 
 
 def s_box(round_key, arg):
