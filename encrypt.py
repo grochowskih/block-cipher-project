@@ -32,14 +32,11 @@ def encrypt(plaintext, key):
     for i in range(1,17):
         R_temp=int(R,2)^int(key,2) #XOR z kluczem
         R_temp=shift(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
-        round_key=generate_key(key, round)
+        round_key=generate_key(key, i)
         R_temp=s_box(round_key, R_temp)
         L_temp=int(L,2)
-        L=R.copy() #Prawy blok staje sie lewym
+        L=R #Prawy blok staje sie lewym
         R=bin(int(R_temp,2)^L_temp)[2:] #XOR lewego bloku z wyjsciem z funkcji f
 
     ciphertext=L+R #Polaczenie lewego i prawego bloku      
-    return ciphertext  
-
-
-encrypt("0101110101010100101101011110101010001000101011010110101010001100","0101101010101001011010111101010100001000100011010110101010001100")
+    return ciphertext

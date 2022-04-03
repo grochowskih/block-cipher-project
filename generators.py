@@ -13,13 +13,13 @@ def generate_key(main_key, round):
     right = main_key[32:64]
 
     if round % 2 == 0:
-        left = left << round
-        right = right >> round
+        left = int(left, 2) << round
+        right = int(right, 2) >> round
     else:
-        left = left >> round
-        right = right << round
+        left = int(left, 2) >> round
+        right = int(right, 2) << round
 
-    return left + right
+    return "{0:032b}".format(left) + "{0:032b}".format(right)
 
 
 def s_box(round_key, arg):
@@ -44,4 +44,4 @@ def s_box(round_key, arg):
             val = sboxes.s_box_2[int(pair[0], 2)]
         res.append(val)
 
-    return "".join(["{0.08b}".format(el) for el in res])
+    return "".join(["{0:08b}".format(el) for el in res])
