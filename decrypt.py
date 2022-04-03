@@ -24,7 +24,7 @@ def decrypt(ciphertext, key):
         new_left = int(new_left, 2) ^ int(right, 2)
 
         old_left = left
-        left = new_left()
+        left = "{0:032b}".format(new_left)
         right = old_left
 
     return left + right
