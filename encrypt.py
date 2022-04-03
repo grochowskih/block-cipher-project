@@ -30,9 +30,9 @@ def encrypt(plaintext, key):
     #Podzial plaintextu na 2 bloki 32-bitowe
 
     for i in range(1,17):
-        R_temp=int(R,2)^int(key,2) #XOR z kluczem
-        R_temp=shift(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
         round_key=generate_key(key, i)
+        R_temp=int(R,2)^int(round_key,2) #XOR z kluczem
+        R_temp=shift(bin(R_temp)[2:],i).zfill(32) #Przesuniecie o i bitów w prawo
         R_temp=s_box(round_key, R_temp)
         L_temp=int(L,2)
         L=R #Prawy blok staje sie lewym
